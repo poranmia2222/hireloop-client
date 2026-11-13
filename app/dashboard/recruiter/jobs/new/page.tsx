@@ -16,6 +16,22 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createJob, type JobFormState } from "./actions"
+import { createJobs } from "@/lib/jobs"
+
+export type Job = {
+  jobTitle: string;
+  companyName: string;
+  category: string;
+  jobType: string;
+  location: string;
+  deadline: string;
+  minSalary: string;
+  maxSalary: string;
+  salaryFrequency: string;
+  qualifications: string;
+  responsibilities: string;
+};
+
 
 const initialState: JobFormState = { status: "idle", message: "" }
 
@@ -70,20 +86,15 @@ function Section({
 export default function NewJobPage() {
     const [state, formAction, pending] = useActionState(createJob, initialState)
 
-    const handleFormSubmite = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmite = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
-        const jobData = Object.fromEntries(formData.entries())
-        // fetch("http://localhost:5000/jobs", {
-        //     method: "POST",
-        //     headers:{
-        //         "Content-Type":"application/json"
-        //     },
-        //     body: JSON.stringify(jobData)
-        // })
-        // .then((res)=>{
+        const jobData = Object.fromEntries(formData.entries()) as Job
+        console.log(jobData)
+        
+        const result = await createJobs(jobData)
+        console.log(result)
 
-        // })
     }
 
     return (
