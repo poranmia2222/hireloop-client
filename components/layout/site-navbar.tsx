@@ -11,16 +11,19 @@ import { cn } from "@/lib/utils"
 import { signOut, useSession } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
 
-const navLinks = [
-  { label: "Browse Jobs", href: "/jobs" },
-  { label: "Company", href: "/company" },
-  { label: "Pricing", href: "/pricing" },
-]
+
 
 export function SiteNavbar({ className }: { className?: string }) {
   const [open, setOpen] = useState(false)
   const {data: session} = useSession()
   const router = useRouter()
+
+  const navLinks = [
+  { label: "Browse Jobs", href: "/jobs" },
+  { label: "Company", href: "/company" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Dashboard", href:  `/dashboard/${session?.user.role}` },
+]
 
   const handleSignOut = async() =>{
     await signOut()
