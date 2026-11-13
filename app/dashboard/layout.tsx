@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-
+import { Toaster } from "@/components/ui/toast"
 import DashboardSidebar from "../components/DashboardSidebar"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
@@ -15,6 +15,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                     <SidebarTrigger className="text-[#A1A4AA] hover:bg-[#1B1B1E] hover:text-white" />
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-6">{children}</main>
+                <Toaster />
             </SidebarInset>
         </SidebarProvider>
     )

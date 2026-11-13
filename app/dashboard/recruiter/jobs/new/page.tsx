@@ -16,9 +16,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createJob, type JobFormState } from "./actions"
-import { createJobs } from "@/lib/jobs"
+import { createJobs } from "@/lib/action/jobs"
 
 export type Job = {
+    _id:string;
   jobTitle: string;
   companyName: string;
   category: string;
