@@ -51,7 +51,7 @@ const menuItemsByRole: Record<DashboardRole, MenuItem[]> = {
         { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
         { label: "Jobs", href: "/dashboard/jobs", icon: Briefcase },
         { label: "Saved Jobs", href: "/dashboard/saved", icon: Bookmark },
-        { label: "Applications", href: "/dashboard/applications", icon: FileText },
+        { label: "Applications", href: "/dashboard/candidate/applications", icon: FileText },
         { label: "Billing", href: "/dashboard/billing", icon: CreditCard },
         { label: "Settings", href: "/dashboard/settings", icon: Settings },
     ],

@@ -24,7 +24,7 @@ function OverviewRow({ label, value }: { label: string; value: ReactNode }) {
 }
 
 export function JobOverview({ job }: { job: Job }) {
-    console.log(job._id)
+    // console.log(job._id)
     return (
         <Card>
             <CardHeader>

@@ -12,4 +12,6 @@ export type Job = {
     qualifications: string;
     responsibilities: string;
     applicants: number;
+    /** Set on jobs created internally by recruiters (see recruiter/jobs/new/actions.ts) */
+    remote?: boolean;
 };
