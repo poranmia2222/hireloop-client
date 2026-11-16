@@ -12,25 +12,26 @@ import {
     MapPin,
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"  
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createJob, type JobFormState } from "./actions"
 import { createJobs } from "@/lib/action/jobs"
+import { useRouter } from "next/navigation"
 
 export type Job = {
-    _id:string;
-  jobTitle: string;
-  companyName: string;
-  category: string;
-  jobType: string;
-  location: string;
-  deadline: string;
-  minSalary: string;
-  maxSalary: string;
-  salaryFrequency: string;
-  qualifications: string;
-  responsibilities: string;
+    _id: string;
+    jobTitle: string;
+    companyName: string;
+    category: string;
+    jobType: string;
+    location: string;
+    deadline: string;
+    minSalary: string;
+    maxSalary: string;
+    salaryFrequency: string;
+    qualifications: string;
+    responsibilities: string;
 };
 
 
@@ -86,15 +87,16 @@ function Section({
 
 export default function NewJobPage() {
     const [state, formAction, pending] = useActionState(createJob, initialState)
-
-    const handleFormSubmite = async(e: React.FormEvent<HTMLFormElement>) => {
+    const router = useRouter()
+    const handleFormSubmite = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const jobData = Object.fromEntries(formData.entries()) as Job
         console.log(jobData)
-        
+
         const result = await createJobs(jobData)
         console.log(result)
+        router.push('/dashboard/recruiter/jobs')
 
     }
 

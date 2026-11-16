@@ -10,16 +10,17 @@ import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { signOut, useSession } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
+import { Job } from "@/types/job"
 
 
 
-export function SiteNavbar({ className }: { className?: string }) {
+export function SiteNavbar({ className, job }: { className?: string}) {
   const [open, setOpen] = useState(false)
   const {data: session} = useSession()
   const router = useRouter()
 
   const navLinks = [
-  { label: "Browse Jobs", href: "/jobs" },
+  { label: "Browse Jobs", href: "/browse-jobs" },
   { label: "Company", href: "/company" },
   { label: "Pricing", href: "/pricing" },
   { label: "Dashboard", href:  `/dashboard/${session?.user.role}` },

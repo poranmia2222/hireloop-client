@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import {useSearchParams } from "next/navigation"
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -10,9 +10,12 @@ import { Label } from "@/components/ui/label"
 import { signIn } from "@/lib/auth-client"
 
 export function SignInForm() {
-    const router = useRouter()
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
+    const searchParams =useSearchParams()
+    const redirect = searchParams.get("redirectTo") ?? "/"
+
+    console.log(redirect)
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -24,6 +27,7 @@ export function SignInForm() {
         const { error } = await signIn.email({
             email:data.email as string,
             password: data.password as string,
+            callbackURL: redirect
         })
 
         if (error) {
@@ -31,8 +35,6 @@ export function SignInForm() {
             setLoading(false)
             return
         }
-
-        router.push("/")
     }
 
     return (
