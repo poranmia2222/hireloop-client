@@ -1,6 +1,5 @@
 import { Job } from "@/app/dashboard/recruiter/jobs/new/page"
 import { CreateApplicationInput, Application } from "@/types/application";
-import { dummyApplications } from "@/lib/data/dummy-applications";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -40,5 +39,9 @@ export async function applyToJob(data: CreateApplicationInput) {
  */
 export async function getMyApplications(query = ""): Promise<Application[]> {
     const res = await fetch(`${BASE_URL}/application?${query}`)
+    return res.json()
+}
+export async function getMyApplicationsCount(query = ""): Promise<{count:number}> {
+    const res = await fetch(`${BASE_URL}/application/count?${query}`)
     return res.json()
 }

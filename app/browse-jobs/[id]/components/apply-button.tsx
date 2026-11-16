@@ -5,7 +5,7 @@ import { Send } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Job } from "@/types/job";
-import { applyToJob } from "@/lib/action/jobs";
+import { applyToJob, getMyApplicationsCount } from "@/lib/action/jobs";
 import { CreateApplicationInput } from "@/types/application";
 
 export function ApplyButton({className,size = "default", job}: 
@@ -23,6 +23,15 @@ export function ApplyButton({className,size = "default", job}:
             return
         }
         else if(user.role === "candidate"){
+
+
+            const countResult = await getMyApplicationsCount(`applicantId=${user.id}`)
+            if(countResult.count >= 10){
+                router.push('/payment')
+                return
+
+            }
+
             const application: CreateApplicationInput = {
                 jobId: job._id,
                 userId: user.id,
