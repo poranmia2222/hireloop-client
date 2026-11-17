@@ -26,3 +26,4 @@ export const auth = betterAuth({
     client,
   }),
 });
+// force rebuild: admin plugin provides auth.api.listUsers
