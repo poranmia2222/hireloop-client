@@ -186,10 +186,13 @@ const ManageJobs = async () => {
 
                                         {/* Applicants */}
                                         <td className="px-5 py-4">
-                                            <span className="flex items-center gap-2 text-sm text-[#D4D4D8]">
+                                            <Link
+                                                href={`/dashboard/recruiter/jobs/${job._id}/applications`}
+                                                className="flex w-fit items-center gap-2 rounded-lg px-2 py-1 text-sm text-[#D4D4D8] transition-colors hover:bg-[#6C55EC]/10 hover:text-[#8F88FF]"
+                                            >
                                                 <Users className="size-4 text-[#777982]" />
                                                 {job.applicants} Candidates
-                                            </span>
+                                            </Link>
                                         </td>
 
                                         {/* Status */}
