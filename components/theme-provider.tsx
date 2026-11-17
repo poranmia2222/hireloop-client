@@ -7,12 +7,22 @@ function ThemeProvider({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
+  // Workaround for React 19.3+ dev warning "Encountered a script tag while
+  // rendering React component": next-themes injects its no-flash <script>
+  // inside the client tree. On the client, render it as a non-executable
+  // script type so React doesn't warn; the SSR'd HTML keeps the real script.
+  const scriptProps =
+    typeof window === "undefined"
+      ? undefined
+      : ({ type: "application/json" } as const)
+
   return (
     <NextThemesProvider
       attribute="class"
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange
+      scriptProps={scriptProps}
       {...props}
     >
       <ThemeHotkey />

@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { BadgeCheck, Check, CreditCard, ShieldCheck } from "lucide-react";
 import { PayButton } from "@/app/dashboard/billing/pay-button";
+import { Button } from "@base-ui/react";
 
 const planFeatures = [
     "Unlimited job applications",
@@ -14,7 +15,16 @@ const planFeatures = [
 
 const price = { amount: "€19.00", period: "per month", cycle: "Billed monthly, cancel anytime" };
 
-const PaymentPage = () => {
+const PaymentPage = async ({ searchParams }: { searchParams: Promise<{ canceled?: string }> }) => {
+
+    const { canceled } = await searchParams
+
+    if (canceled) {
+        console.log(
+            'Order canceled -- continue to shop around and check out when you\'re ready.'
+        )
+    }
+
     return (
         <div className="dark min-h-screen bg-[#0A0A0A] text-foreground [background-image:radial-gradient(120%_90%_at_50%_0%,#2A2A2A_0%,#131313_45%,#0A0A0A_100%)]">
             <main className="mx-auto flex min-h-screen max-w-5xl items-center px-4 py-12 sm:px-6">
@@ -98,7 +108,16 @@ const PaymentPage = () => {
                             </div>
 
                             <div className="mt-6">
-                                <PayButton />
+
+                                <form action="/api/checkout_sessions" method="POST">
+                                    <section>
+                                        <Button
+                                            type="submit"
+                                            role="link"
+                                            className="h-11 w-full rounded-lg bg-[#6C55EC] text-white hover:bg-[#5C45D6]">Checkout ${price.amount}
+                                        </Button>
+                                    </section>
+                                </form>
                                 <p className="mt-3 flex items-start gap-2 text-xs text-[#777982]">
                                     <ShieldCheck className="mt-0.5 size-4 shrink-0 text-emerald-400" />
                                     Payments are secure and encrypted. You&apos;ll be redirected to

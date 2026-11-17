@@ -7,26 +7,29 @@ import { Button } from "@/components/ui/button";
 import { Job } from "@/types/job";
 import { applyToJob, getMyApplicationsCount } from "@/lib/action/jobs";
 import { CreateApplicationInput } from "@/types/application";
+import { getUserPremuimById } from "@/lib/api/user";
 
-export function ApplyButton({className,size = "default", job}: 
-    {className?: string;size?: "default" | "lg";
-        job:Job
-}) {
+export function ApplyButton({ className, size = "default", job }:
+    {
+        className?: string; size?: "default" | "lg";
+        job: Job
+    }) {
     const { data: session } = useSession();
     const user = session?.user;
     const router = useRouter();
     // console.log(id)
 
-    const handleApplyNow = async() => {
+    const handleApplyNow = async () => {
         if (!user) {
             router.push(`/sign-in?redirectTo=/browse-jobs/${job._id}`);
             return
         }
-        else if(user.role === "candidate"){
+        else if (user.role === "candidate") {
 
-
+            const premiumResult = await getUserPremuimById(user.id)
+            console.log(premiumResult)
             const countResult = await getMyApplicationsCount(`applicantId=${user.id}`)
-            if(countResult.count >= 10){
+            if (!premiumResult.premium && countResult.count >= 2) {
                 router.push('/payment')
                 return
 
@@ -44,12 +47,12 @@ export function ApplyButton({className,size = "default", job}:
                 appliedAt: new Date().toISOString(),
             }
             const result = await applyToJob(application)
-            if(result.insertedId){
+            if (result.insertedId) {
                 console.log("application submitted")
                 router.push('/browse-jobs')
             }
         }
-        else{
+        else {
             console.log('this user is not a candidate')
         }
     };
